@@ -53,17 +53,16 @@ Public Sub CreateKML(coordList As String)
 
     tS.WriteLine "        <LineString>"
 
-    'KML coords are Long, Lat,... not Lat, Long
+    'Coords are in order of Long/Lat,... not Lat/Long for Google Earth KMLs
     tS.WriteLine "            <tessellate>1</tessellate>"
     tS.WriteLine "            <coordinates>"
-            
-        For i = 0 To splitCoordListLength
-            tS.WriteLine "        -148.444794444444,61.0569277777778,0"
-            tS.WriteLine "        -151.300844444444,61.6053027777778,0"
-            tS.WriteLine "        -160.179758333333,61.5664472222222,0"
-            tS.WriteLine "        -167.587908333333,59.5620722222222,0"
-            tS.WriteLine "        -160.179758333333,61.5664472222222,0"
+        
+        tS.WriteLine splitCoordList(0) & "," & splitCoordList(1) & ",0"  'initiate the coord tesselate
+        
+        For i = 2 To splitCoordListLength
+            tS.WriteLine splitCoordList(i - 1) & "," & splitCoordList(i) & ",0"
         Next
+        
     tS.WriteLine "        </coordinates>"
 
     tS.WriteLine "    </LineString>"
@@ -85,3 +84,4 @@ Public Sub CreateKML(coordList As String)
     Set fso = Nothing
 
 End Sub
+
