@@ -1,0 +1,87 @@
+Option Compare Database
+
+'//////////////////////////////////////////////////////////////////////////////////////////
+'
+' Go to Tools -> References and add "Microsoft Scripting Runtime" to be able to use
+' the FileSystemObject to utilize the file write tools
+'
+'//////////////////////////////////////////////////////////////////////////////////////////
+
+'Creates a KML to visually display a flight route in Google Earth based on a list of user-given coordinates
+Public Sub CreateKML(coordList As String)
+    
+    Dim splitCoordList() As String 'array to split the coordList so we can
+                                   'run a loop to build the coordinates in the
+                                   'KML's tesselate portion
+    splitCoordList = Split(coordList, ",")
+    
+    Dim splitCoordListLength As Integer 'counter for length of splitCoordList
+    splitCoordListLength = UBound(splitCoordList) - LBound(splitCoordList) 'sets the length
+    
+    Dim filePath As String
+    filePath = "C:\Users\Weikai\Documents\MyKMLs\myKML.kml"
+
+    ' The advantage of correctly typing fso as FileSystemObject is to make autocompletion
+    ' (Intellisense) work, which helps you avoid typos and lets you discover other useful
+    ' methods of the FileSystemObject
+    Dim fso As FileSystemObject
+    Set fso = New FileSystemObject
+    Dim tS As TextStream
+
+    ' Here the actual file is created and opened for write access
+    Set tS = fso.CreateTextFile(filePath)
+
+    ' Write to the KML (text) file
+    tS.WriteLine "<?xml version='1.0' encoding='UTF-8'?>"
+    tS.WriteLine "<kml xmlns='http://www.opengis.net/kml/2.2' xmlns:gx='http://www.google.com/kml/ext/2.2' xmlns:kml='http://www.opengis.net/kml/2.2' xmlns:atom='http://www.w3.org/2005/Atom'>"
+    tS.WriteLine "<Document>"
+
+    tS.WriteLine "<name>Redmal Flight.kml</name>"
+
+    tS.WriteLine "    <Style id='orange-5px'>"
+    tS.WriteLine "        <LineStyle>"
+    tS.WriteLine "            <color>ff00aaff</color>"
+    tS.WriteLine "            <width>5</width>"
+    tS.WriteLine "        </LineStyle>"
+    tS.WriteLine "    </Style>"
+
+
+    tS.WriteLine "    <Placemark>"
+
+    tS.WriteLine "        <name>Redmal Flight</name>"
+    tS.WriteLine "        <styleUrl>#orange-5px</styleUrl>"
+
+    tS.WriteLine "        <LineString>"
+
+    'KML coords are Long, Lat,... not Lat, Long
+    tS.WriteLine "            <tessellate>1</tessellate>"
+    tS.WriteLine "            <coordinates>"
+            
+        For i = 0 To splitCoordListLength
+            tS.WriteLine "        -148.444794444444,61.0569277777778,0"
+            tS.WriteLine "        -151.300844444444,61.6053027777778,0"
+            tS.WriteLine "        -160.179758333333,61.5664472222222,0"
+            tS.WriteLine "        -167.587908333333,59.5620722222222,0"
+            tS.WriteLine "        -160.179758333333,61.5664472222222,0"
+        Next
+    tS.WriteLine "        </coordinates>"
+
+    tS.WriteLine "    </LineString>"
+
+    tS.WriteLine "</Placemark>"
+
+    tS.WriteLine "</Document>"
+    tS.WriteLine "</kml>"
+
+    ' Close it, so it is not locked
+    tS.Close
+
+    ' check if file was created
+    If fso.FileExists(filePath) Then
+        MsgBox "KML was created."
+    End If
+
+    Set tS = Nothing
+    Set fso = Nothing
+
+End Sub
