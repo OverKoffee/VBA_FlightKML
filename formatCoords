@@ -1,9 +1,71 @@
 Option Compare Database
 
-Function determineCoordinateFormat(coord1 As String, coord2 As String) As Integer
-    'this function will determine the format of the coordinates the user has input
-    ' and return an integer value to reference functions that convert the coords to
-    ' a usable format for calculations
+
+    '/////////////////////////////////////////////////////////////////////////////////
+    '
+    ' This function will determine the format of the coordinates the user has input
+    ' and the coords in a properly formatted string to prepare to write the KML
+    '
+    '/////////////////////////////////////////////////////////////////////////////////
     
+
+
+Function determineCoordinateFormat(coords As String) As Integer
+    
+    If (InStr(1, coords, ChrW(&HB0)) > 0) And (InStr(1, coords, "'") > 0) Then
+        Call coordsAreDMS(coords)
+    ElseIf (Left(coords, 4) Like "#.##") Or (Left(coords, 4) Like "##.#") _
+            Or (Left(coords, 4) Like "###.") Or (Left(coords, 2) Like "-#") Then
+        Call coordsAreDecimal(coords)
+    End If
+    
+    
+End Function
+
+
+'return the coordinates in Decimal format, Long/Lat order
+Function coordsAreDMS(coords As String) As String
+
+    Dim appendCoords As String
+    Dim splitCoords() As String
+    Dim splitCoordsLength As Integer
+    
+    'clean the text
+    coords = Replace(coords, ",", " ")
+    coords = Replace(coords, vbNewLine, " ")
+    
+    splitCoords = Split(coords, " ")
+    splitCoordsLength = UBound(splitCoords) - LBound(splitCoords)
+    
+    appendCoords = splitCoords(splitCoordsLength - 1) & "," & splitCoords(splitCoordsLength) 'initiate building the string with the split in proper (reverse) order - Long/Lat
+    For i = (splitCoordsLength - 2) To 0 Step -1
+        appendCoords = appendCoords & "," & Convert_Decimal(splitCoords(i)) 'converts to Decimal here
+    Next
+    
+    coordsAreDMS = appendCoords
+    
+End Function
+
+
+' return the coordinates in Long/Lat order
+Function coordsAreDecimal(coords As String) As String
+
+    Dim appendCoords As String
+    Dim splitCoords() As String
+    Dim splitCoordsLength As Integer
+    
+    'clean the text
+    coords = Replace(coords, ",", " ")
+    coords = Replace(coords, vbNewLine, " ")
+    
+    splitCoords = Split(coords, " ")
+    splitCoordsLength = UBound(splitCoords) - LBound(splitCoords)
+    
+    appendCoords = splitCoords(splitCoordsLength - 1) & "," & splitCoords(splitCoordsLength) 'initiate building the string with the split in proper (reverse) order - Long/Lat
+    For i = (splitCoordsLength - 2) To 0 Step -1
+        appendCoords = appendCoords & "," & splitCoords(i)
+    Next
+    
+    coordsAreDecimal = appendCoords
     
 End Function
