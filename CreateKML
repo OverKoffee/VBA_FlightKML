@@ -59,11 +59,13 @@ Public Sub CreateKML(coordList As String)
     tS.WriteLine "            <tessellate>1</tessellate>"
     tS.WriteLine "            <coordinates>"
         
-        tS.WriteLine splitCoordList(0) & "," & splitCoordList(1) & ",0"  'initiate the coord tesselate
+        tS.WriteLine splitCoordList(1) & "," & splitCoordList(0) & ",0" 'initiate the coord tesselate, first set is reversed
         
         For i = 2 To splitCoordListLength
-            tS.WriteLine splitCoordList(i - 1) & "," & splitCoordList(i) & ",0"
+            tS.WriteLine splitCoordList(i) & "," & splitCoordList(i + 1) & ",0"
+            i = i + 1
         Next
+        
         
     tS.WriteLine "        </coordinates>"
 
