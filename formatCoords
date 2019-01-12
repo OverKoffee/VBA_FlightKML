@@ -13,9 +13,11 @@ Option Compare Database
 Function determineCoordinateFormat(coords As String) As String
     
     If (InStr(1, coords, ChrW(&HB0)) > 0) And (InStr(1, coords, "'") > 0) Then
+            MsgBox "DMS format"
         determineCoordinateFormat = coordsAreDMS(coords)
     ElseIf (Left(coords, 4) Like "#.##") Or (Left(coords, 4) Like "##.#") _
-            Or (Left(coords, 4) Like "###.") Or (Left(coords, 2) Like "-#") Then
+            Or (Left(coords, 4) Like "###.") Or (Val(Left(coords, 2)) < 0) Then
+                MsgBox "decimal format"
         determineCoordinateFormat = coordsAreDecimal(coords)
     Else
         MsgBox "The coordinate format could not be determined. Please use DMS or Decimal format. "
@@ -36,11 +38,13 @@ Function coordsAreDMS(coords As String) As String
     'clean the text
     coords = Replace(coords, ",", " ")
     coords = Replace(coords, vbNewLine, " ")
+    coords = Replace(coords, "  ", " ")
     
     splitCoords = Split(coords, " ")
     splitCoordsLength = UBound(splitCoords) - LBound(splitCoords)
     
-    appendCoords = splitCoords(splitCoordsLength - 1) & "," & splitCoords(splitCoordsLength) 'initiate building the string with the split in proper (reverse) order - Long/Lat
+    'initiate string w/ converted to decimal format & split in proper (reverse) order - Long/Lat
+    appendCoords = Convert_Decimal(splitCoords(splitCoordsLength - 1)) & "," & Convert_Decimal(splitCoords(splitCoordsLength))
     For i = (splitCoordsLength - 2) To 0 Step -1
         appendCoords = appendCoords & "," & Convert_Decimal(splitCoords(i)) 'converts to Decimal here
     Next
@@ -60,6 +64,8 @@ Function coordsAreDecimal(coords As String) As String
     'clean the text
     coords = Replace(coords, ",", " ")
     coords = Replace(coords, vbNewLine, " ")
+    coords = Replace(coords, "  ", " ")
+    MsgBox "Coords: " & coords
     
     splitCoords = Split(coords, " ")
     splitCoordsLength = UBound(splitCoords) - LBound(splitCoords)
