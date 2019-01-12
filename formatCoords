@@ -1,0 +1,9 @@
+Option Compare Database
+
+Function determineCoordinateFormat(coord1 As String, coord2 As String) As Integer
+    'this function will determine the format of the coordinates the user has input
+    ' and return an integer value to reference functions that convert the coords to
+    ' a usable format for calculations
+    
+    
+End Function
