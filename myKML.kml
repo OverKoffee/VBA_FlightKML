@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2' xmlns:gx='http://www.google.com/kml/ext/2.2' xmlns:kml='http://www.opengis.net/kml/2.2' xmlns:atom='http://www.w3.org/2005/Atom'>
+<Document>
+<name>Redmal Flight.kml</name>
+    <Style id='orange-5px'>
+        <LineStyle>
+            <color>ff00aaff</color>
+            <width>5</width>
+        </LineStyle>
+    </Style>
+    <Placemark>
+        <name>Redmal Flight</name>
+        <styleUrl>#orange-5px</styleUrl>
+        <LineString>
+            <tessellate>1</tessellate>
+            <coordinates>
+120.218111111111,22.4917777777778,0
+120.399833333333,22.1703888888889,0
+121.210805555556,22.0713611111111,0
+123.207694444444,21.7857222222222,0
+125.42225,22.9574722222222,0
+129.187361111111,27.8567777777778,0
+145.174444444444,37.1180277777778,0
+145.174444444444,37.1180277777778,0
+154.777083333333,40.0705,0
+165.716972222222,48.6329444444444,0
+-173.778527777778,53.3790833333333,0
+-163.516444444444,57.2974166666667,0
+-160.117,60.3785,0
+-152.399027777778,61.5088888888889,0
+-149.080055555556,61.2419722222222,0
+        </coordinates>
+    </LineString>
+</Placemark>
+</Document>
+</kml>
