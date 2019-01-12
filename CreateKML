@@ -1,11 +1,13 @@
 Option Compare Database
 
-'//////////////////////////////////////////////////////////////////////////////////////////
-'
-' Go to Tools -> References and add "Microsoft Scripting Runtime" to be able to use
-' the FileSystemObject to utilize the file write tools
-'
-'//////////////////////////////////////////////////////////////////////////////////////////
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    '
+    ' Go to Tools -> References and add "Microsoft Scripting Runtime" to be able to use
+    ' the FileSystemObject to utilize the file write tools
+    '
+    '//////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 'Creates a KML to visually display a flight route in Google Earth based on a list of user-given coordinates
 Public Sub CreateKML(coordList As String)
@@ -75,7 +77,7 @@ Public Sub CreateKML(coordList As String)
     ' Close it, so it is not locked
     tS.Close
 
-    ' check if file was created
+    ' Check if file was created
     If fso.FileExists(filePath) Then
         MsgBox "KML was created."
     End If
@@ -84,4 +86,3 @@ Public Sub CreateKML(coordList As String)
     Set fso = Nothing
 
 End Sub
-
