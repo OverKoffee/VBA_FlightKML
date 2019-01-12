@@ -10,13 +10,16 @@ Option Compare Database
     
 
 
-Function determineCoordinateFormat(coords As String) As Integer
+Function determineCoordinateFormat(coords As String) As String
     
     If (InStr(1, coords, ChrW(&HB0)) > 0) And (InStr(1, coords, "'") > 0) Then
-        Call coordsAreDMS(coords)
+        determineCoordinateFormat = coordsAreDMS(coords)
     ElseIf (Left(coords, 4) Like "#.##") Or (Left(coords, 4) Like "##.#") _
             Or (Left(coords, 4) Like "###.") Or (Left(coords, 2) Like "-#") Then
-        Call coordsAreDecimal(coords)
+        determineCoordinateFormat = coordsAreDecimal(coords)
+    Else
+        MsgBox "The coordinate format could not be determined. Please use DMS or Decimal format. "
+        Exit Function
     End If
     
     
