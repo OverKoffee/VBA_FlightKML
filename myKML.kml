@@ -1,5 +1,7 @@
 This is a sample of how the KML looks when created from CreateKML.
-
+The coordinates in the tesselate portion were converted on the main form,
+and reversed to Long/Lat order, since KMLs read coordinates in Long/Lat rather than
+Lat/Long.
 
 <?xml version='1.0' encoding='UTF-8'?>
 <kml xmlns='http://www.opengis.net/kml/2.2' xmlns:gx='http://www.google.com/kml/ext/2.2' xmlns:kml='http://www.opengis.net/kml/2.2' xmlns:atom='http://www.w3.org/2005/Atom'>
