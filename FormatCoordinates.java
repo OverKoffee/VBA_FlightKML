@@ -21,7 +21,7 @@ public class FormatCoordinates {
                     Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude2)) *
                             Math.sin(dbl_dLon / 2) * Math.sin(dbl_dLon / 2);
 
-        dbl_Distance_KM = 6371 * (2 * Math.atan2(Math.sqrt(1 - dbl_a), Math.sqrt(dbl_a)));
+        dbl_Distance_KM = 6371 * (2 * Math.atan2(Math.sqrt(dbl_a), Math.sqrt(1 - dbl_a)));
 
         return dbl_Distance_KM;
     }
@@ -32,6 +32,7 @@ public class FormatCoordinates {
 
     public double toDecimalFormat(String degreeCoords){
         double degrees, minutes, seconds;
+
         String coordSplit[];
 
         //degreeCoords is passed in a format similar to 37°47'27.1"N
@@ -42,9 +43,9 @@ public class FormatCoordinates {
 
         coordSplit = degreeCoords.split("\\s+"); //splits whitespace &/or consecutive whitespace
 
-        degrees = Double.parseDouble(coordSplit[0]);
-        minutes = Double.parseDouble(coordSplit[1]);
-        seconds = Double.parseDouble(coordSplit[2]);
+        degrees = Double.valueOf(coordSplit[0]);
+        minutes = Double.valueOf(coordSplit[1]);
+        seconds = Double.valueOf(coordSplit[2]);
 
         if (coordSplit[7].equals("W") || coordSplit[7].equals("S")){
             return -1 * degrees+minutes+seconds;
